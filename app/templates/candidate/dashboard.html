@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Candidate Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Candidate Dashboard</h2>
+  <a href="{{ url_for('candidate.account_profile') }}" class="btn btn-outline-primary">Edit Profile</a>
+</div>
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Applications</h5>
+        <h3>{{ application_count }}</h3>
+        <a class="link-light" href="{{ url_for('candidate.applications') }}">View applications</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Interviews</h5>
+        <h3>{{ interview_count }}</h3>
+        <a class="link-light" href="{{ url_for('candidate.interviews') }}">View interviews</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Matches</h5>
+        <h3>{{ jobs|length }}</h3>
+        <a class="link-light" href="{{ url_for('candidate.recommendations') }}">View recommendations</a>
+      </div>
+      <div class="mt-4">
+        <a class="btn btn-outline-primary" href="{{ url_for('candidate.resume') }}">Manage resume</a>
+        <a class="btn btn-outline-secondary" href="{{ url_for('candidate.notifications') }}">Notifications ({{ unread_count }} unread)</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-4">
+  <h4>Recommended Roles</h4>
+  <div class="list-group">
+    {% for job in jobs %}
+    <a href="/jobs/{{ job.id }}" class="list-group-item list-group-item-action">
+      <strong>{{ job.title }}</strong>
+      <div class="small text-muted">{{ job.company }} • {{ job.location }}</div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

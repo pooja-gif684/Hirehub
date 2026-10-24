@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Manage Jobs{% endblock %}
+{% block content %}
+<h2>Manage Job Postings</h2>
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead><tr><th>Job</th><th>Recruiter</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for job in jobs %}
+      <tr>
+        <td><strong>{{ job.title }}</strong><br><small>{{ job.company }} · {{ job.location }}</small></td>
+        <td>{{ job.posted_by }}</td>
+        <td>{{ job.get('status', 'open') }}</td>
+        <td class="d-flex gap-2">
+          <form method="post">
+            <input type="hidden" name="job_id" value="{{ job.id }}">
+            <input type="hidden" name="action" value="toggle">
+            <button class="btn btn-sm btn-outline-primary" type="submit">
+              {% if job.get('status', 'open') == 'open' %}Close{% else %}Reopen{% endif %}
+            </button>
+          </form>
+          <form method="post" onsubmit="return confirm('Delete this job?')">
+            <input type="hidden" name="job_id" value="{{ job.id }}">
+            <input type="hidden" name="action" value="delete">
+            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">No jobs have been posted.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

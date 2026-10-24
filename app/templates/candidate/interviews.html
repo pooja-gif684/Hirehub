@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}My Interviews{% endblock %}
+{% block content %}
+<h2>My Interviews</h2>
+{% if interviews %}
+<div class="list-group">
+  {% for interview in interviews %}
+  <div class="list-group-item">
+    <strong>{{ interview.scheduled_for[:16].replace('T', ' ') }} UTC</strong>
+    <span class="badge bg-primary ms-2">{{ interview.status }}</span>
+    <div>{{ interview.mode|title }} interview · Application {{ interview.application_id[:8] }}</div>
+    {% if interview.meeting_link %}<a href="{{ interview.meeting_link }}" rel="noopener">Join interview</a>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No interviews have been scheduled.</p>
+{% endif %}
+{% endblock %}

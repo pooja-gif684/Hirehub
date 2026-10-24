@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Jobs{% endblock %}
+{% block content %}
+<h2 class="mb-4">Job Opportunities</h2>
+<form method="get" class="row g-3 mb-4">
+  <div class="col-md-3"><input class="form-control" name="query" value="{{ filters.get('query', '') }}" placeholder="Search keywords"></div>
+  <div class="col-md-3"><input class="form-control" name="location" value="{{ filters.get('location', '') }}" placeholder="Location"></div>
+  <div class="col-md-2"><input class="form-control" name="category" value="{{ filters.get('category', '') }}" placeholder="Category"></div>
+  <div class="col-md-2"><input class="form-control" name="job_type" value="{{ filters.get('job_type', '') }}" placeholder="Job type"></div>
+  <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Search</button></div>
+</form>
+
+<div class="list-group">
+  {% for job in jobs %}
+  <a href="/jobs/{{ job.id }}" class="list-group-item list-group-item-action">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <h5 class="mb-1">{{ job.title }}</h5>
+        <div class="text-muted">{{ job.company }} • {{ job.location }}</div>
+      </div>
+      <span class="badge bg-primary rounded-pill">{{ job.job_type }}</span>
+    </div>
+    <p class="mb-1 mt-2">{{ job.description[:160] }}...</p>
+    <small class="text-muted">{{ job.salary }}</small>
+  </a>
+  {% else %}
+  <div class="alert alert-info">No jobs available right now.</div>
+  {% endfor %}
+</div>
+{% endblock %}

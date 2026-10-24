@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+<h2>Notifications</h2>
+{% if notifications %}
+<div class="list-group">
+  {% for notification in notifications %}
+  <div class="list-group-item {% if not notification.is_read %}list-group-item-primary{% endif %}">
+    <span class="badge bg-secondary">{{ notification.type }}</span>
+    <p class="mb-1 mt-2">{{ notification.message }}</p>
+    <small class="text-muted">{{ notification.created_at[:16].replace('T', ' ') }}</small>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>You have no notifications.</p>
+{% endif %}
+{% endblock %}

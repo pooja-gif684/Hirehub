@@ -1,0 +1,23 @@
+body {
+    background: #f5f7fb;
+}
+
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    color: white;
+}
+
+.list-group-item {
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.navbar-brand {
+    letter-spacing: 0.04rem;
+}

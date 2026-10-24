@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Audit Logs{% endblock %}
+{% block content %}
+<h2>Audit Logs</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Resource</th><th>IP</th></tr></thead>
+    <tbody>
+      {% for entry in logs %}
+      <tr>
+        <td>{{ entry.created_at[:19].replace('T', ' ') }}</td>
+        <td>{{ entry.actor_id }}</td>
+        <td>{{ entry.action }}</td>
+        <td>{{ entry.resource_type }} {{ entry.resource_id }}</td>
+        <td>{{ entry.ip_address }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No audit events recorded yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

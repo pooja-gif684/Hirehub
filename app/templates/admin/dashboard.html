@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="row g-4">
+  {% for key, value in metrics.items() %}
+  <div class="col-md-3">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h6>{{ key.replace('_', ' ').title() }}</h6>
+        <h3>{{ value }}</h3>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

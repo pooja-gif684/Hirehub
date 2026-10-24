@@ -1,0 +1,3 @@
+# HireHub Architecture
+
+The project uses a Flask app factory and blueprints, with route, service, repository, and typed document-model layers. Repositories access MongoDB through the shared PyMongo extension, while services execute business logic and route handlers remain lightweight. Candidate profile access is isolated through the candidate repository and service; recruiter-owned company profiles have their own collection, repository, and service. User accounts and profiles, company profiles, job postings, applications, interviews, notifications, resume metadata, and audit events persist in MongoDB. Resume binaries are stored in the configured upload directory.

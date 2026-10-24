@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+{% block content %}
+<h2>Applications</h2>
+{% if applications %}
+<div class="list-group">
+  {% for app in applications %}
+  <div class="list-group-item">
+    <strong>Application #{{ app.id[:8] }}</strong>
+    <span class="badge bg-secondary ms-2">{{ app.status }}</span>
+    <div class="small text-muted">Job: {{ app.job_title or app.job_id }} · Applied {{ app.created_at[:10] }}</div>
+    {% if app.cover_letter %}<p class="mt-2 mb-0">{{ app.cover_letter }}</p>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No applications submitted yet.</p>
+{% endif %}
+{% endblock %}

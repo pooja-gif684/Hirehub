@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+{% block content %}
+<h2>Manage Users</h2>
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Access</th></tr></thead>
+    <tbody>
+      {% for account in users %}
+      <tr>
+        <td>{{ account.first_name }} {{ account.last_name }}</td>
+        <td>{{ account.email }}</td>
+        <td>{{ account.created_at[:10] if account.created_at else '' }}</td>
+        <td>
+          <form method="post">
+            <input type="hidden" name="user_id" value="{{ account.id }}">
+            <label class="visually-hidden" for="role-{{ loop.index }}">Role</label>
+            <select id="role-{{ loop.index }}" class="form-select form-select-sm mb-2" name="role">
+              {% for role in ['candidate', 'recruiter', 'admin'] %}
+              <option value="{{ role }}" {% if account.role == role %}selected{% endif %}>{{ role|title }}</option>
+              {% endfor %}
+            </select>
+            <select class="form-select form-select-sm mb-2" name="active" aria-label="Account access">
+              <option value="true" {% if account.get('active', true) %}selected{% endif %}>Active</option>
+              <option value="false" {% if not account.get('active', true) %}selected{% endif %}>Disabled</option>
+            </select>
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No users found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

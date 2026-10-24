@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Interview Overview{% endblock %}
+{% block content %}
+<h2>Interview Overview</h2>
+{% if interviews %}
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead><tr><th>Scheduled</th><th>Candidate</th><th>Recruiter</th><th>Format</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for interview in interviews %}
+      <tr>
+        <td>{{ interview.scheduled_for[:16].replace('T', ' ') }} UTC</td>
+        <td>{{ interview.candidate_id }}</td>
+        <td>{{ interview.recruiter_id }}</td>
+        <td>{{ interview.mode }}</td>
+        <td>{{ interview.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>No interviews scheduled.</p>
+{% endif %}
+{% endblock %}

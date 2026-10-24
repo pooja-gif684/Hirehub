@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Recruiter Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Recruiter Dashboard</h2>
+  <a href="/recruiter/jobs" class="btn btn-primary">Publish Job</a>
+</div>
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Live Jobs</h5>
+        <h3>{{ jobs|length }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Applicants</h5>
+        <h3>{{ metrics.total_applications }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card">
+      <div class="card-body">
+        <h5>Candidates</h5>
+        <h3>{{ metrics.candidate_count }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-4 d-flex flex-wrap gap-2">
+  <a class="btn btn-outline-primary" href="{{ url_for('recruiter.applications') }}">Review applications</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('recruiter.interviews') }}">Schedule interviews</a>
+</div>
+{% endblock %}

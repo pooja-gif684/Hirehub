@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Interviews{% endblock %}
+{% block content %}
+<h2>Schedule an Interview</h2>
+{% if applications %}
+<form method="post" class="row g-3 mb-5">
+  <div class="col-md-5">
+    <label class="form-label" for="application">Application</label>
+    <select id="application" class="form-select" name="application_id" required>
+      {% for application in applications %}
+      <option value="{{ application.id }}">Application {{ application.id[:8] }} · {{ application.status }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label" for="scheduled">Date and time (UTC)</label>
+    <input id="scheduled" class="form-control" type="datetime-local" name="scheduled_for" required>
+  </div>
+  <div class="col-md-2">
+    <label class="form-label" for="mode">Format</label>
+    <select id="mode" class="form-select" name="mode"><option value="virtual">Virtual</option><option value="in-person">In person</option><option value="phone">Phone</option></select>
+  </div>
+  <div class="col-md-2">
+    <label class="form-label" for="link">Meeting link</label>
+    <input id="link" class="form-control" type="url" name="meeting_link">
+  </div>
+  <div class="col-12"><button class="btn btn-primary" type="submit">Schedule interview</button></div>
+</form>
+{% else %}
+<p>There are no applications to schedule yet.</p>
+{% endif %}
+<h3>Scheduled interviews</h3>
+{% if interviews %}
+<div class="list-group">
+  {% for interview in interviews %}
+  <div class="list-group-item">
+    <strong>{{ interview.scheduled_for[:16].replace('T', ' ') }} UTC</strong>
+    <span class="badge bg-primary ms-2">{{ interview.status }}</span>
+    <div>{{ interview.mode|title }} · Candidate {{ interview.candidate_id[:8] }}</div>
+    {% if interview.meeting_link %}<a href="{{ interview.meeting_link }}" rel="noopener">Meeting link</a>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No interviews scheduled.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+{% block content %}
+<h2>Applications to your jobs</h2>
+{% if applications %}
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead><tr><th>Candidate</th><th>Job</th><th>Applied</th><th>Status</th><th>Update status</th></tr></thead>
+    <tbody>
+      {% for application in applications %}
+      {% set candidate = users.get(application.candidate_id, {}) %}
+      <tr>
+        <td>
+          {{ candidate.get('first_name', '') }} {{ candidate.get('last_name', '') }}<br>
+          <small>{{ candidate.get('email', 'Candidate') }}</small>
+          {% for resume in resumes.get(application.candidate_id, []) %}
+          <br><a href="{{ url_for('recruiter.download_candidate_resume', resume_id=resume.id) }}">{{ resume.original_name }}</a>
+          {% endfor %}
+        </td>
+        <td>{{ jobs.get(application.job_id, {}).get('title', 'Job') }}</td>
+        <td>{{ application.created_at[:10] }}</td>
+        <td><span class="badge bg-secondary">{{ application.status }}</span></td>
+        <td>
+          <form method="post" class="d-flex gap-2">
+            <input type="hidden" name="application_id" value="{{ application.id }}">
+            <select class="form-select form-select-sm" name="status" aria-label="Application status">
+              {% for status in ['reviewing', 'shortlisted', 'rejected', 'hired'] %}
+              <option value="{{ status }}" {% if application.status == status %}selected{% endif %}>{{ status|title }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-sm btn-primary" type="submit">Save</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>No applications have been received for your jobs yet.</p>
+{% endif %}
+{% endblock %}

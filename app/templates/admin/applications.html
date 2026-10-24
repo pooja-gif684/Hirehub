@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Manage Applications{% endblock %}
+{% block content %}
+<h2>Manage Applications</h2>
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead><tr><th>Application</th><th>Candidate</th><th>Job</th><th>Status</th><th>Update</th></tr></thead>
+    <tbody>
+      {% for application in applications %}
+      <tr>
+        <td>{{ application.id[:8] }}</td>
+        <td>{{ application.candidate_id }}</td>
+        <td>{{ jobs.get(application.job_id, {}).get('title', 'Job unavailable') }}</td>
+        <td>{{ application.status }}</td>
+        <td>
+          <form method="post" class="d-flex gap-2">
+            <input type="hidden" name="application_id" value="{{ application.id }}">
+            <select class="form-select form-select-sm" name="status">
+              {% for status in ['applied', 'reviewing', 'shortlisted', 'rejected', 'hired'] %}
+              <option value="{{ status }}" {% if application.status == status %}selected{% endif %}>{{ status|title }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-sm btn-primary">Save</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No applications yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

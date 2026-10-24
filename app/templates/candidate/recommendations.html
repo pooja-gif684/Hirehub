@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Recommendations{% endblock %}
+{% block content %}
+<h2>Recommended Jobs</h2>
+{% if recommendations %}
+<div class="list-group">
+  {% for job in recommendations %}
+  <a href="/jobs/{{ job.id }}" class="list-group-item list-group-item-action">
+    <div class="d-flex justify-content-between">
+      <strong>{{ job.title }}</strong>
+      <span class="text-success">Match {{ job.match_score }}</span>
+    </div>
+    <small>{{ job.company }} • {{ job.location }}</small>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<p>No recommendations yet.</p>
+{% endif %}
+{% endblock %}

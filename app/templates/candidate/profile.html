@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<h2>Profile</h2>
+<form method="post" class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label" for="firstName">First Name</label>
+    <input id="firstName" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="lastName">Last Name</label>
+    <input id="lastName" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="headline">Professional Headline</label>
+    <input id="headline" name="headline" class="form-control" value="{{ user.get('headline', '') }}">
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="location">Location</label>
+    <input id="location" name="location" class="form-control" value="{{ user.get('location', '') }}">
+  </div>
+  {% if user.role == 'recruiter' %}
+  <div class="col-md-6">
+    <label class="form-label" for="company">Company</label>
+    <input id="company" name="company" class="form-control" value="{{ user.get('company', '') }}">
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="position">Position</label>
+    <input id="position" name="position" class="form-control" value="{{ user.get('position', '') }}">
+  </div>
+  {% endif %}
+  <div class="col-12">
+    <label class="form-label" for="skills">Skills (comma-separated)</label>
+    <input id="skills" name="skills" class="form-control" value="{{ user.get('skills', [])|join(', ') }}">
+  </div>
+  <div class="col-12">
+    <p class="text-muted">Email: {{ user.email }}</p>
+    <button class="btn btn-primary" type="submit">Save Profile</button>
+  </div>
+</form>
+<hr class="my-4">
+<h3>Change password</h3>
+<form method="post" class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label" for="currentPassword">Current password</label>
+    <input id="currentPassword" name="current_password" class="form-control" type="password" autocomplete="current-password">
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="newPassword">New password (at least 8 characters)</label>
+    <input id="newPassword" name="new_password" class="form-control" type="password" minlength="8" autocomplete="new-password">
+  </div>
+  <div class="col-12"><button class="btn btn-outline-primary" type="submit">Update password</button></div>
+</form>
+{% endblock %}

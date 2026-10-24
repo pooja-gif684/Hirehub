@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Recruiter Jobs{% endblock %}
+{% block content %}
+<h2>Publish a Job</h2>
+<form method="post" class="row g-3 mb-4">
+  <div class="col-md-4"><input class="form-control" name="title" placeholder="Title" required></div>
+  <div class="col-md-4"><input class="form-control" name="company" placeholder="Company"></div>
+  <div class="col-md-4"><input class="form-control" name="location" placeholder="Location"></div>
+  <div class="col-md-3"><input class="form-control" name="job_type" placeholder="Job Type"></div>
+  <div class="col-md-3"><input class="form-control" name="salary" placeholder="Salary"></div>
+  <div class="col-md-3"><input class="form-control" name="category" placeholder="Category"></div>
+  <div class="col-md-3"><input class="form-control" name="requirements" placeholder="Skills, comma separated"></div>
+  <div class="col-12"><textarea class="form-control" name="description" rows="4" placeholder="Description"></textarea></div>
+  <div class="col-12"><button type="submit" class="btn btn-primary">Publish</button></div>
+</form>
+
+<h3>Current Jobs</h3>
+<div class="list-group">
+  {% for job in jobs %}
+  <div class="list-group-item">
+    <strong>{{ job.title }}</strong>
+    <div class="small text-muted">{{ job.company }} • {{ job.location }}</div>
+    <div class="mt-2 d-flex gap-2">
+      <a class="btn btn-sm btn-outline-primary" href="{{ url_for('recruiter.edit_job', job_id=job.id) }}">Edit</a>
+      <form method="post" action="{{ url_for('recruiter.delete_job', job_id=job.id) }}" onsubmit="return confirm('Delete this job?')">
+        <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
